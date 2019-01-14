@@ -101,10 +101,24 @@ student.map(({ id }) => id);
 
 ## 截取属性并去重
 
-- 去重 1: 返回兑现数组
+- 去重 1: 返回对象数组
 
 ```js
-待补充;
+getUniqueArray(array, item){
+    let uniqueArray = [];
+    for (let i = 0; i < array.length; i++) {
+      let flag = true;
+      for (let j = 0; j < uniqueArray.length; j++) {
+        if ((uniqueArray[j][item] === array[i][item])) {
+          flag = false;
+        }
+      }
+      if (flag) {
+        uniqueArray.push(array[i]);
+      }
+    }
+    return uniqueArray;
+  }
 ```
 
 - 去重 2: 返回一维数组
