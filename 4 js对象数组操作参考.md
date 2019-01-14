@@ -1,0 +1,238 @@
+# js对象数组操作指南
+
+## 前言
+### 起源
+- 对象数组与二维数据表相似
+- 工作中大部分接触对象数组，很多时候都是在对对象数组进行操作以及对其中的数据进行处理
+### 所用数据
+不说明的情况，所用的数据一般指以下。
+#### 数据
+```js
+let student = [
+  {
+    id: 1,
+    stuNo: 20190801,
+    name: '王二二',
+    age: 21,
+    major: '计算机科学与技术',
+    isParty: 1,
+    sex: 0
+  },s
+  {
+    id: 2,
+    stuNo: 20190802,
+    name: '李冬梅',
+    age: 20,
+    major: '计算机科学与技术',
+    isParty: 0,
+    sex: 1
+  },
+  {
+    id: 3,
+    stuNo: 20190803,
+    name: '张晓芳',
+    age: 21,
+    major: '汉语言文学',
+    isParty: 1,
+    sex: 1
+  },
+  {
+    id: 4,
+    stuNo: 20190804,
+    name: '张雨'
+    age: 24,
+    major: '汉语言文学',
+    isParty: 1,
+    sex: 0
+  },
+  {
+    id: 5,
+    stuNo: 20190805,
+    name: '张子豪',
+    age: 22,
+    major: '通信工程',
+    isParty: 0,
+    sex: 0
+  },
+];
+```
+#### 数据含义说明
+|属性名称|中文含义|备注|
+|--|--|--|
+|id|id|
+|stuNo|学号|8位|
+|name|名字|
+|age|年龄|
+|major|专业|
+|isParty|是否是党员|否:0,是:1|
+|sex|性别|男:0, 女:1|
+
+## 目录
+* [1 检索](#检索)
+	* [1.1 检索数据](#检索数据)
+* [2 排序](#排序)
+* [3 过滤](#过滤)
+* [4 插入数据](#插入数据)
+* [5 操作对象数组](#操作对象数组)
+	* [5.1 创建](#创建)
+	* [5.2 更新](#更新)
+	* [5.3 删除](#删除)
+	* [5.4 重命名](#重命名)
+
+
+## 普通截取
+
+- 截取 1
+
+```js
+student.map(({ id, name }) => ({ id, name }));
+
+/*-----res-----*/
+[{ id: 1, name: '王二二' }, { id: 2, name: '李冬梅' }, { id: 3, name: '张晓芳' }];
+```
+
+- 截取 2
+
+```js
+student.map(({ id }) => id);
+/*----- res-----*/
+[1, 2, 3];
+```
+
+## 截取属性并去重
+
+- 去重 1: 返回兑现数组
+
+```js
+待补充;
+```
+
+- 去重 2: 返回一维数组
+
+```js
+[...new Set(student.map(({ sex }) => sex))];
+
+/*----- res -----*/
+[0, 1];
+```
+
+## 过滤
+
+- 1. 比较运算符及逻辑运算: `= > < >= ,<=, !=,<> ,|| &&`
+
+```js
+student.filter(item => item.age > 20);
+/*-----res-----*/
+[
+  { id: 1, stuNo: 20190601, name: '王二二', age: 21, major: '计算机科学与技术', isParty: 1, sex: 0 },
+  { id: 3, stuNo: 20190620, name: '张晓芳', age: 21, major: '汉语言文学', isParty: 1, sex: 1 }
+];
+
+student.filter(item => item.sex === 0);
+/*----- res -----*/
+[{ id: 1, stuNo: 20190601, name: '王二二', age: 21, major: '计算机科学与技术', isParty: 1, sex: 0 }];
+
+student.filter(item => item.age > 20 && item.age < 22);
+/*----- res -----*/
+[
+  { id: 1, stuNo: 20190601, name: '王二二', age: 21, major: '计算机科学与技术', isParty: 1, sex: 0 },
+  { id: 3, stuNo: 20190620, name: '张晓芳', age: 21, major: '汉语言文学', isParty: 1, sex: 1 }
+];
+```
+
+2. in 范围
+   查询学号为`[20190601,20190614]`的数组
+
+```js
+let range = [20190601, 20190614];
+let res = student.filter(item => range.includes(item.stuNo));
+/*----- res -----*/
+[
+  { id: 1, stuNo: 20190601, name: '王二二', age: 21, major: '计算机科学与技术', isParty: 1, sex: 0 },
+  { id: 2, stuNo: 20190614, name: '李冬梅', age: 20, major: '计算机科学与技术', isParty: 0, sex: 1 }
+];
+```
+
+3. 模糊查询
+   查询名字为'张'的学生
+
+```js
+student.filter(item => item.name.includes('张'));
+/*----- res ------*/
+[
+  { id: 3, stuNo: 20190620, name: '张晓芳', age: 21, major: '汉语言文学', isParty: 1, sex: 1 },
+  { id: 4, stuNo: 20190620, name: '张雨', age: 24, major: '汉语言文学', isParty: 1, sex: 0 }
+];
+```
+
+## 排序
+
+1. 升序
+
+```js
+/*------ 按年龄从小到大排序 ------ */
+student.sort((a, b) => a.age > b.age);
+/*------ res ------*/
+[
+  { id: 2, stuNo: 20190614, name: '李冬梅', age: 20, major: '计算机科学与技术', isParty: 0, sex: 1 },
+  { id: 1, stuNo: 20190601, name: '王二二', age: 21, major: '计算机科学与技术', isParty: 1, sex: 0 },
+  { id: 3, stuNo: 20190620, name: '张晓芳', age: 21, major: '汉语言文学', isParty: 1, sex: 1 },
+  { id: 4, stuNo: 20190620, name: '张雨', age: 24, major: '汉语言文学', isParty: 1, sex: 0 }
+];
+```
+
+2. 降序
+
+```js
+/*----- 按年龄从大到小排序 ------ */
+student.sort((a, b) => a.age < b.age);
+/*------ res ------*/
+[
+  { id: 4, stuNo: 20190620, name: '张雨', age: 24, major: '汉语言文学', isParty: 1, sex: 0 },
+  { id: 1, stuNo: 20190601, name: '王二二', age: 21, major: '计算机科学与技术', isParty: 1, sex: 0 },
+  { id: 3, stuNo: 20190620, name: '张晓芳', age: 21, major: '汉语言文学', isParty: 1, sex: 1 },
+  { id: 2, stuNo: 20190614, name: '李冬梅', age: 20, major: '计算机科学与技术', isParty: 0, sex: 1 }
+];
+```
+
+## 插入数据
+
+```js
+[...student, ...newStudent];
+/*----- res ----- */
+[
+  { id: 1, stuNo: 20190601, name: '王二二', age: 21, major: '计算机科学与技术', isParty: 1, sex: 0 },
+  { id: 2, stuNo: 20190614, name: '李冬梅', age: 20, major: '计算机科学与技术', isParty: 0, sex: 1 },
+  { id: 3, stuNo: 20190620, name: '张晓芳', age: 21, major: '汉语言文学', isParty: 1, sex: 1 },
+  { id: 4, stuNo: 20190620, name: '张雨', age: 24, major: '汉语言文学', isParty: 1, sex: 0 },
+  { id: 5, stuNo: 2019067, name: '马宇', age: 23, major: '旅游管理', isParty: 1, sex: 1 }
+];
+```
+
+### 操作对象数组
+## 转为对象数组
+
+数据如下
+
+```
+let price = {
+  空调: 12200,
+  冰箱: 14440,
+  洗衣机: 1222
+};
+```
+
+具体操作
+
+```
+let newPrice = [];
+for (let [k, v] of Object.entries(price)) {
+  newPrice = [...newPrice, { name: k, value: v }];
+}
+/*------ 结果 -----*/
+[{"name":"空调","value":12200},{"name":"冰箱","value":14440},{"name":"洗衣机","value":1222}]
+```
+
+
+
+2019/1/14 15:01:47 
