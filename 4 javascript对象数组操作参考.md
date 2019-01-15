@@ -17,7 +17,7 @@ let student = [
     major: '计算机科学与技术',
     isParty: 1,
     sex: 0
-  },s
+  },
   {
     id: 2,
     stuNo: 20190802,
@@ -39,7 +39,7 @@ let student = [
   {
     id: 4,
     stuNo: 20190804,
-    name: '张雨'
+    name: '张雨',
     age: 24,
     major: '汉语言文学',
     isParty: 1,
