@@ -333,6 +333,7 @@ export default {
 ## 参考
 
 [1][vuex 是什么？ | vuex](https://vuex.vuejs.org/zh/)
+
 [2][should i store this data in vuex? - markus oberlehner](https://markus.oberlehner.net/blog/should-i-store-this-data-in-vuex/)
 
 2019/1/18 15:10:12 
