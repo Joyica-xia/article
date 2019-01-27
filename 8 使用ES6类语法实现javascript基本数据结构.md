@@ -84,6 +84,56 @@ stack.clear(); // []
 
 ```
 ## 队列
+```
+class Queue {
+  //  初始化队列
+  constructor(...items) {
+    this._items = [];
+    this.enqueue(...items);
+  }
+
+  //  入列
+  enqueue(...items) {
+    items.forEach(item => this._items.push(item));
+    return this._items;
+  }
+
+  //  出列
+  dequeue(count = 1) {
+    this._items.splice(0, count);
+    return this._items;
+  }
+
+  //  查看栈顶元素
+  peek() {
+    return this._items[0];
+  }
+
+  //  获取队列的长度
+  size() {
+    return this._items.length;
+  }
+
+  //  检查队列是否为空
+  isEmpty() {
+    return this._items.length === 0;
+  }
+}
+let my_queue = new Queue(1, 24, 4); // [1, 24, 4]
+
+my_queue.enqueue(23); // [1, 24, 4, 23]
+
+my_queue.enqueue(1, 2, 342); //[1, 24, 4, 23, 1, 2, 342]
+
+my_queue.dequeue(); //[24, 4, 23, 1, 2, 342]
+
+my_queue.dequeue(3); //[1, 2, 342]
+
+my_queue.isEmpty(); // false
+
+my_queue.size(); //3
+
+```
 ## 链表
 ## 集合
 ## 字典
